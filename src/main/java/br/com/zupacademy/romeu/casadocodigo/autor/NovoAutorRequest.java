@@ -1,21 +1,26 @@
 package br.com.zupacademy.romeu.casadocodigo.autor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class NovoAutorRequest {
 
-  @NotBlank(message = "O campo nome é obrigatório")
+  @NotBlank
   private String nome;
 
-  @Email
-  @NotBlank(message = "O campo email é obrigatório")
+  @Email @NotBlank @Column(unique = true)
   private String email;
 
-  @Size(max = 400)
-  @NotBlank(message = "O campo descrição é obrigatório")
+  @NotBlank @Size(max = 400)
   private String descricao;
+
+  public NovoAutorRequest(@NotBlank String nome, @Email @NotBlank String email, @NotBlank @Size(max = 400) String descricao) {
+    this.nome = nome;
+    this.email = email;
+    this.descricao = descricao;
+  }
 
   public String getNome() {
     return nome;
