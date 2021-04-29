@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class AutorInsertRequest {
+public class NovoAutorRequest {
 
   @NotBlank(message = "O campo nome é obrigatório")
   private String nome;
@@ -29,7 +29,7 @@ public class AutorInsertRequest {
     return descricao;
   }
 
-  public Autor transformarEmModel() {
+  public Autor toModel() {
     return new Autor(this.nome, this.email, this.descricao);
   }
 

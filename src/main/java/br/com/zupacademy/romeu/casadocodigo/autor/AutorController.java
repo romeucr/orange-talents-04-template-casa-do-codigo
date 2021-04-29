@@ -18,8 +18,8 @@ public class AutorController {
 
   @PostMapping
   @Transactional
-  public void cadastraAutor(@RequestBody @Valid AutorInsertRequest autorInsertRequest) {
-    Autor autor = autorInsertRequest.transformarEmModel();
+  public void cadastraAutor(@RequestBody @Valid NovoAutorRequest novoAutorRequest) {
+    Autor autor = novoAutorRequest.toModel();
     autorRepository.save(autor);
   }
 }
