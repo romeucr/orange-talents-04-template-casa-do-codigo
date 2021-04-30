@@ -1,6 +1,5 @@
 package br.com.zupacademy.romeu.casadocodigo.compartilhado;
 
-
 import br.com.zupacademy.romeu.casadocodigo.autor.Autor;
 import br.com.zupacademy.romeu.casadocodigo.autor.AutorRepository;
 import br.com.zupacademy.romeu.casadocodigo.autor.NovoAutorRequest;
@@ -37,7 +36,7 @@ public class VerificaEmailDuplicadoValidator implements Validator {
 
     if (possivelAutor.isPresent()) {
       // campo, código de erro, mensagem de erro
-      errors.rejectValue("email", "EmailCadastrado", "{EmailCadastrado.email}");
+      errors.rejectValue("email", "AutorCadastrado", "{AutorCadastrado.email}");
     }
 
   }
