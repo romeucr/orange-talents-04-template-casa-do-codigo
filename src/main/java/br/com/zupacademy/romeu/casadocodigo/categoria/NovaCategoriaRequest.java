@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 public class NovaCategoriaRequest {
 
   @NotBlank
-  @VerificaUnicidadeNoBanco(autorOuCategoria = "categoria")
+  @VerificaUnicidadeNoBanco(campo = "nome", tabela = Categoria.class)
   private String nome;
 
   public Categoria toModel() {

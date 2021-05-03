@@ -13,13 +13,13 @@ public class NovoAutorRequest {
   private String nome;
 
   @Email @NotBlank @Column(unique = true)
-  @VerificaUnicidadeNoBanco(autorOuCategoria = "autor")
+  @VerificaUnicidadeNoBanco(campo = "email", tabela = Autor.class)
   private String email;
 
   @NotBlank @Size(max = 400)
   private String descricao;
 
-  public NovoAutorRequest(@NotBlank String nome, @Email @NotBlank String email, @NotBlank @Size(max = 400) String descricao) {
+  public NovoAutorRequest(@NotBlank String nome, @VerificaUnicidadeNoBanco(campo = "email", tabela = Autor.class) @Email @NotBlank String email, @NotBlank @Size(max = 400) String descricao) {
     this.nome = nome;
     this.email = email;
     this.descricao = descricao;

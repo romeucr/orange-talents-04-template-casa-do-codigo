@@ -1,40 +1,36 @@
 package br.com.zupacademy.romeu.casadocodigo.compartilhado;
 
-import br.com.zupacademy.romeu.casadocodigo.autor.Autor;
-import br.com.zupacademy.romeu.casadocodigo.autor.AutorRepository;
-import br.com.zupacademy.romeu.casadocodigo.categoria.Categoria;
-import br.com.zupacademy.romeu.casadocodigo.categoria.CategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Optional;
+import java.util.List;
 
-public class VerificaUnicidadeNoBancoValidator implements ConstraintValidator<VerificaUnicidadeNoBanco, String> {
+public class VerificaUnicidadeNoBancoValidator implements ConstraintValidator<VerificaUnicidadeNoBanco, Object> {
 
-  @Autowired
-  private AutorRepository autorRepository;
+  private String campo;
+  private Class<?> tabela;
 
-  @Autowired
-  private CategoriaRepository categoriaRepository;
-
-  private String autorOuCategoria;
+  @PersistenceContext
+  EntityManager entityManager;
 
   @Override
   public void initialize(VerificaUnicidadeNoBanco constraintAnnotation) {
-    this.autorOuCategoria = constraintAnnotation.autorOuCategoria();
+    this.campo = constraintAnnotation.campo();
+    this.tabela = constraintAnnotation.tabela();
   }
 
   @Override
-  public boolean isValid(String value, ConstraintValidatorContext context) {
+  public boolean isValid(Object value, ConstraintValidatorContext context) {
+    List<?> listaResultados = entityManager.createQuery("SELECT t FROM "
+            + tabela.getName()
+            + " t WHERE "
+            + campo
+            + " = :valor")
+            .setParameter("valor", value)
+            .getResultList();
 
-    if (autorOuCategoria.equalsIgnoreCase("autor")) {
-      Optional<Autor> optAutor = autorRepository.findByEmail(value);
-      return optAutor.isEmpty();
-    } else {
-      Optional<Categoria> optCategoria = categoriaRepository.findByNome(value);
-      return optCategoria.isEmpty();
-    }
+    return listaResultados.isEmpty();
   }
 
 }

@@ -9,11 +9,14 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Constraint(validatedBy = VerificaUnicidadeNoBancoValidator.class)
-@Target({ FIELD })
+@Target({ FIELD, PARAMETER })
 @Retention(RUNTIME)
 public @interface VerificaUnicidadeNoBanco {
   String message() default "O valor informado já está cadastrado no banco de dados";
-  String autorOuCategoria();
+
+  String campo();
+  Class<?> tabela();
+
   Class<?>[] groups() default {};
   Class<? extends Payload>[] payload() default {};
 }
