@@ -32,10 +32,10 @@ public class Autor {
   @Column(nullable = false)
   private LocalDateTime criadoEm;
 
-  @Deprecated
   /**
    * deve ser usado somente pelo hibernate
    */
+  @Deprecated
   public Autor(){};
 
   public Autor(@NotBlank String nome, @Email @NotBlank String email, @NotBlank @Size(max = 400) String descricao) {

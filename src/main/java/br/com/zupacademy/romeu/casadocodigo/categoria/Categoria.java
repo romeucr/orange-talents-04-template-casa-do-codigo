@@ -13,6 +13,9 @@ public class Categoria {
   @NotBlank @Column(unique = true, nullable = false)
   private String nome;
 
+  /**
+   * deve ser usado somente pelo hibernate
+   */
   @Deprecated
   public Categoria(){}
 
@@ -20,4 +23,11 @@ public class Categoria {
     this.nome = nome;
   }
 
+  public Long getId() {
+    return id;
+  }
+
+  public String getNome() {
+    return nome;
+  }
 }

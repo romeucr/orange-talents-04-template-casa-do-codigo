@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
 
-public class VerificaUnicidadeNoBancoValidator implements ConstraintValidator<VerificaUnicidadeNoBanco, Object> {
+public class ValorUnicoValidator implements ConstraintValidator<ValorUnico, Object> {
 
   private String campo;
   private Class<?> tabela;
@@ -15,22 +14,25 @@ public class VerificaUnicidadeNoBancoValidator implements ConstraintValidator<Ve
   EntityManager entityManager;
 
   @Override
-  public void initialize(VerificaUnicidadeNoBanco constraintAnnotation) {
+  public void initialize(ValorUnico constraintAnnotation) {
     this.campo = constraintAnnotation.campo();
     this.tabela = constraintAnnotation.tabela();
   }
 
   @Override
   public boolean isValid(Object value, ConstraintValidatorContext context) {
-    List<?> listaResultados = entityManager.createQuery("SELECT t FROM "
-            + tabela.getName()
-            + " t WHERE "
-            + campo
-            + " = :valor")
-            .setParameter("valor", value)
-            .getResultList();
 
-    return listaResultados.isEmpty();
+    if (campo.equalsIgnoreCase("isbn")) {
+      value = value.toString().replaceAll("[^0-9]", "");
+    }
+
+    Boolean valorJaExiste = entityManager
+          .createQuery("SELECT COUNT(t) < 1 FROM " + tabela.getName() + " t WHERE "
+          + campo + " = :pValor", Boolean.class)
+          .setParameter("pValor", value)
+          .getSingleResult();
+
+    return valorJaExiste;
   }
 
 }

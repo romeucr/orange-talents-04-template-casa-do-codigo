@@ -1,6 +1,6 @@
 package br.com.zupacademy.romeu.casadocodigo.autor;
 
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.VerificaUnicidadeNoBanco;
+import br.com.zupacademy.romeu.casadocodigo.compartilhado.ValorUnico;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
@@ -13,13 +13,13 @@ public class NovoAutorRequest {
   private String nome;
 
   @Email @NotBlank @Column(unique = true)
-  @VerificaUnicidadeNoBanco(campo = "email", tabela = Autor.class)
+  @ValorUnico(campo = "email", tabela = Autor.class)
   private String email;
 
   @NotBlank @Size(max = 400)
   private String descricao;
 
-  public NovoAutorRequest(@NotBlank String nome, @VerificaUnicidadeNoBanco(campo = "email", tabela = Autor.class) @Email @NotBlank String email, @NotBlank @Size(max = 400) String descricao) {
+  public NovoAutorRequest(@NotBlank String nome, @ValorUnico(campo = "email", tabela = Autor.class) @Email @NotBlank String email, @NotBlank @Size(max = 400) String descricao) {
     this.nome = nome;
     this.email = email;
     this.descricao = descricao;
