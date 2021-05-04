@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class Livro {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   @NotBlank
   @Column(nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
@@ -52,6 +52,12 @@ public class Livro {
   @ManyToOne @NotNull @Valid
   private Autor autor;
 
+  /**
+   * para uso exclusivo do hibernate
+   */
+  @Deprecated
+  public Livro(){}
+
   public Livro(@NotBlank String titulo,
                @NotBlank @Length(max = 500) String resumo,
                @NotBlank String sumario,
@@ -72,4 +78,43 @@ public class Livro {
     this.autor = autor;
   }
 
+  public Long getId() {
+    return id;
+  }
+
+  public String getTitulo() {
+    return titulo;
+  }
+
+  public String getResumo() {
+    return resumo;
+  }
+
+  public String getSumario() {
+    return sumario;
+  }
+
+  public BigDecimal getPreco() {
+    return preco;
+  }
+
+  public Integer getNumeroDePaginas() {
+    return numeroDePaginas;
+  }
+
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public LocalDate getDataDePublicacao() {
+    return dataDePublicacao;
+  }
+
+  public Categoria getCategoria() {
+    return categoria;
+  }
+
+  public Autor getAutor() {
+    return autor;
+  }
 }
