@@ -4,17 +4,13 @@ import br.com.zupacademy.romeu.casadocodigo.autor.Autor;
 import br.com.zupacademy.romeu.casadocodigo.autor.AutorRepository;
 import br.com.zupacademy.romeu.casadocodigo.categoria.Categoria;
 import br.com.zupacademy.romeu.casadocodigo.categoria.CategoriaRepository;
-import br.com.zupacademy.romeu.casadocodigo.categoria.NovaCategoriaRequest;
 import br.com.zupacademy.romeu.casadocodigo.compartilhado.ValorUnico;
 import br.com.zupacademy.romeu.casadocodigo.compartilhado.VerifyIfExists;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import org.hibernate.validator.constraints.ISBN;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import javax.persistence.Column;
-import javax.persistence.EntityManager;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,6 +25,7 @@ public class NovoLivroRequest {
   @NotBlank @Length(max = 500)
   private String resumo;
 
+  @NotBlank
   private String sumario;
 
   @NotNull @Min(20) @Positive
@@ -40,7 +37,7 @@ public class NovoLivroRequest {
   @NotBlank @ISBN @ValorUnico(campo = "isbn", tabela = Livro.class)
   private String isbn;
 
-  @NotNull @Future @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
+  @NotNull @Future @JsonFormat(pattern = "dd/MM/yyyy", shape = Shape.STRING)
   private LocalDate dataDePublicacao;
 
   @NotNull @VerifyIfExists(campo = "id", tabela = Categoria.class)
@@ -51,16 +48,18 @@ public class NovoLivroRequest {
 
   public NovoLivroRequest(){}
 
-  public NovoLivroRequest(@NotBlank @ValorUnico(campo = "titulo", tabela = Livro.class) String titulo,
+  public NovoLivroRequest(@NotBlank String titulo,
                           @NotBlank @Length(max = 500) String resumo,
+                          @NotBlank String sumario,
                           @NotNull @Min(20) @Positive BigDecimal preco,
                           @NotNull @Min(100) @Positive Integer numeroDePaginas,
-                          @NotBlank @ISBN @ValorUnico(campo = "isbn", tabela = Livro.class) String isbn,
-                          @NotNull @Future @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING) LocalDate dataDePublicacao,
-                          @NotNull @VerifyIfExists(campo = "id", tabela = Categoria.class) Long categoriaId,
-                          @NotNull @VerifyIfExists(campo = "id", tabela = Autor.class) Long autorId) {
+                          @NotBlank @ISBN String isbn,
+                          @NotNull @Future LocalDate dataDePublicacao,
+                          @NotNull Long categoriaId,
+                          @NotNull Long autorId) {
     this.titulo = titulo;
     this.resumo = resumo;
+    this.sumario = sumario;
     this.preco = preco;
     this.numeroDePaginas = numeroDePaginas;
     this.isbn = formataIsbn(isbn);
