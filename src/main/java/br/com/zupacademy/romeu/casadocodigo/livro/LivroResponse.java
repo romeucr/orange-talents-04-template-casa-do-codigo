@@ -1,6 +1,6 @@
 package br.com.zupacademy.romeu.casadocodigo.livro;
 
-public class LivroResponse {
+public class  LivroResponse {
 
   private Long id;
   private String titulo;
