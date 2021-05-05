@@ -43,7 +43,7 @@ public class LivroController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<LivroDetalheResponse> listaLivroId(@PathVariable @Valid Long id) {
+  public ResponseEntity<?> buscaLivroPorId(@PathVariable("id") @Valid Long id) {
     Optional<Livro> optLivro = livroRepository.findById(id);
 
     if (optLivro.isEmpty()) {
