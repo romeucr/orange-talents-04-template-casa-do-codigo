@@ -1,10 +1,9 @@
 package br.com.zupacademy.romeu.casadocodigo.estado;
 
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.VerifyEstadoPais;
+import br.com.zupacademy.romeu.casadocodigo.compartilhado.VerifyIfExists;
 import br.com.zupacademy.romeu.casadocodigo.pais.Pais;
 import br.com.zupacademy.romeu.casadocodigo.pais.PaisRepository;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -15,6 +14,7 @@ public class NovoEstadoRequest {
   private String nome;
 
   @NotNull
+  @VerifyIfExists(campo = "id", tabela = Pais.class)
   private Long paisId;
 
   @Deprecated

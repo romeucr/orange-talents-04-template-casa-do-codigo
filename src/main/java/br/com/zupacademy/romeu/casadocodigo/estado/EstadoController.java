@@ -1,6 +1,5 @@
 package br.com.zupacademy.romeu.casadocodigo.estado;
 
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.VerifyEstadoPais;
 import br.com.zupacademy.romeu.casadocodigo.pais.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,6 @@ public class EstadoController {
     }
 
     Estado estado = novoEstadoRequest.toModel(paisRepository);
-
     estadoRepository.save(estado);
     return ResponseEntity.ok().build();
   }
