@@ -38,7 +38,9 @@ public class Autor {
   @Deprecated
   public Autor(){};
 
-  public Autor(@NotBlank String nome, @Email @NotBlank String email, @NotBlank @Size(max = 400) String descricao) {
+  public Autor(@NotBlank String nome,
+               @Email @NotBlank String email,
+               @NotBlank @Size(max = 400) String descricao) {
     this.nome = nome;
     this.email = email;
     this.descricao = descricao;
