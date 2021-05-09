@@ -1,7 +1,7 @@
 package br.com.zupacademy.romeu.casadocodigo.cliente;
 
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.CPFOuCNPJ;
 import br.com.zupacademy.romeu.casadocodigo.compartilhado.excecoes.EstadoValidationException;
+import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.CPFOuCNPJ;
 import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.ValorUnico;
 import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.VerifyIfExists;
 import br.com.zupacademy.romeu.casadocodigo.estado.Estado;
@@ -59,27 +59,7 @@ public class NovoClienteRequest {
    * @deprecated para uso do hibernate
    */
   @Deprecated
-  public NovoClienteRequest() {
-  }
-
-  public NovoClienteRequest(@NotBlank @Email String email, @NotBlank String nome,
-                            @NotBlank String sobrenome, @NotBlank String documento,
-                            @NotBlank String endereco, @NotBlank String complemento,
-                            @NotBlank String cidade, @NotBlank String telefone,
-                            @NotBlank String cep, @NotNull Long paisId,
-                            Long estadoId) {
-    this.email = email;
-    this.nome = nome;
-    this.sobrenome = sobrenome;
-    this.documento = removeStrings(documento);
-    this.endereco = endereco;
-    this.complemento = complemento;
-    this.cidade = cidade;
-    this.telefone = removeStrings(telefone);
-    this.cep = removeStrings(cep);
-    this.paisId = paisId;
-    this.estadoId = estadoId;
-  }
+  public NovoClienteRequest() {}
 
   public Cliente toModel(PaisRepository paisRepository, EstadoRepository estadoRepository) {
     Optional<Pais> optPais = paisRepository.findById(this.paisId);
@@ -87,15 +67,11 @@ public class NovoClienteRequest {
 
     List<Optional<Estado>> listaDeEstadoByPaisId = estadoRepository.findByPaisId(this.paisId);
 
-    /**
-     * Se há estados para aquele país e não foi enviado um estado, lança exceção
-     */
+    /* Se há estados para aquele país e não foi enviado um estado, lança exceção */
     if (!listaDeEstadoByPaisId.isEmpty() && this.estadoId == null) {
       throw new EstadoValidationException("Deve ser informado um Estado para o País selecionado");
     }
-    /**
-     * Se NÃO há estados para aquele país e não foi enviado um estado, segue com a criação do cliente
-     */
+    /* Se NÃO há estados para aquele país e não foi enviado um estado, segue com a criação do cliente */
     else if (listaDeEstadoByPaisId.isEmpty() && this.estadoId == null) {
       return new Cliente(email, nome, sobrenome, removeStrings(documento), endereco, complemento,
               cidade, removeStrings(telefone), removeStrings(cep), pais, null);
@@ -104,11 +80,14 @@ public class NovoClienteRequest {
     Optional<Estado> optEstado = estadoRepository.findById(this.estadoId);
     Estado estado = optEstado.get();
 
+    if (!estado.verificaSePertenceAoPais(pais))
+      throw new EstadoValidationException("O Estado informado não pertence ao País informado");
+
     return new Cliente(email, nome, sobrenome, removeStrings(documento), endereco, complemento,
             cidade, removeStrings(telefone), removeStrings(cep), pais, estado);
   }
 
-  public String removeStrings(String informacao) {
+  public String removeStrings(@NotNull String informacao) {
     return informacao.replaceAll("[^0-9]", "");
   }
 

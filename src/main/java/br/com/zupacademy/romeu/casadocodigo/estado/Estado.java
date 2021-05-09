@@ -29,4 +29,7 @@ public class Estado {
     this.pais = pais;
   }
 
+  public boolean verificaSePertenceAoPais(Pais paisEnviado) {
+    return this.pais.equals(paisEnviado);
+  }
 }
