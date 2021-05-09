@@ -1,22 +1,22 @@
-package br.com.zupacademy.romeu.casadocodigo.compartilhado;
+package br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Constraint(validatedBy = VerifyIfExistsValidator.class)
+@Constraint(validatedBy = ValorUnicoValidator.class)
 @Target({ FIELD, PARAMETER })
 @Retention(RUNTIME)
-public @interface VerifyIfExists {
-  String message() default "O valor informado não está cadastrado no banco de dados";
+public @interface ValorUnico {
+  String message() default "O valor informado já está cadastrado no banco de dados";
 
   String campo();
   Class<?> tabela();
+  boolean removeStrings() default false;
 
   Class<?>[] groups() default {};
   Class<? extends Payload>[] payload() default {};

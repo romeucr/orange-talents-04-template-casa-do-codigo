@@ -1,7 +1,5 @@
 package br.com.zupacademy.romeu.casadocodigo.pais;
 
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.ValorUnico;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 

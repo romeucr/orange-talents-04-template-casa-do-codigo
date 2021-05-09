@@ -1,10 +1,10 @@
-package br.com.zupacademy.romeu.casadocodigo.compartilhado;
+package br.com.zupacademy.romeu.casadocodigo.compartilhado.excecoes;
 
-public class ErroRequest {
+public class ErroPadrao {
   private String campo;
   private String erro;
 
-  public ErroRequest(String campo, String erro) {
+  public ErroPadrao(String campo, String erro) {
     this.campo = campo;
     this.erro = erro;
   }

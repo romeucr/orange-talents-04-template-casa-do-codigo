@@ -1,4 +1,4 @@
-package br.com.zupacademy.romeu.casadocodigo.compartilhado;
+package br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

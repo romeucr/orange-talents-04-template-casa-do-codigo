@@ -1,4 +1,4 @@
-package br.com.zupacademy.romeu.casadocodigo.compartilhado;
+package br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +9,7 @@ public class ValorUnicoValidator implements ConstraintValidator<ValorUnico, Obje
 
   private String campo;
   private Class<?> tabela;
+  private boolean removeStrings;
 
   @PersistenceContext
   EntityManager entityManager;
@@ -17,12 +18,13 @@ public class ValorUnicoValidator implements ConstraintValidator<ValorUnico, Obje
   public void initialize(ValorUnico constraintAnnotation) {
     this.campo = constraintAnnotation.campo();
     this.tabela = constraintAnnotation.tabela();
+    this.removeStrings = constraintAnnotation.removeStrings();
   }
 
   @Override
   public boolean isValid(Object value, ConstraintValidatorContext context) {
 
-    if (campo.equalsIgnoreCase("isbn")) {
+    if (removeStrings) {
       value = value.toString().replaceAll("[^0-9]", "");
     }
 

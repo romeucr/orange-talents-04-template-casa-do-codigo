@@ -1,6 +1,6 @@
 package br.com.zupacademy.romeu.casadocodigo.autor;
 
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.ValorUnico;
+import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.ValorUnico;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;

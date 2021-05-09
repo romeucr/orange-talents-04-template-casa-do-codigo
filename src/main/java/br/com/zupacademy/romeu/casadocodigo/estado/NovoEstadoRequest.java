@@ -1,6 +1,6 @@
 package br.com.zupacademy.romeu.casadocodigo.estado;
 
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.VerifyIfExists;
+import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.VerifyIfExists;
 import br.com.zupacademy.romeu.casadocodigo.pais.Pais;
 import br.com.zupacademy.romeu.casadocodigo.pais.PaisRepository;
 

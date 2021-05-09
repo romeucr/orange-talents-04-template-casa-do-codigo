@@ -4,8 +4,8 @@ import br.com.zupacademy.romeu.casadocodigo.autor.Autor;
 import br.com.zupacademy.romeu.casadocodigo.autor.AutorRepository;
 import br.com.zupacademy.romeu.casadocodigo.categoria.Categoria;
 import br.com.zupacademy.romeu.casadocodigo.categoria.CategoriaRepository;
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.ValorUnico;
-import br.com.zupacademy.romeu.casadocodigo.compartilhado.VerifyIfExists;
+import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.ValorUnico;
+import br.com.zupacademy.romeu.casadocodigo.compartilhado.validacoes.VerifyIfExists;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import org.hibernate.validator.constraints.ISBN;
@@ -34,7 +34,7 @@ public class NovoLivroRequest {
   @NotNull @Min(100) @Positive
   private Integer numeroDePaginas;
 
-  @NotBlank @ISBN @ValorUnico(campo = "isbn", tabela = Livro.class)
+  @NotBlank @ISBN @ValorUnico(campo = "isbn", tabela = Livro.class, removeStrings = true)
   private String isbn;
 
   @NotNull @Future @JsonFormat(pattern = "dd/MM/yyyy", shape = Shape.STRING)
